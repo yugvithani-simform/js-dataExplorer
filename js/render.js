@@ -1,4 +1,13 @@
-export function makeTable(jsonData){
+import state from "./state.js";
+
+export function render(filteredData){
+    document.getElementById('pageNo').innerHTML = state.currentPage;
+    document.getElementById('totalPage').innerHTML = `/ ${state.totalPage}`;
+    document.getElementById('pageNo').value = state.pageNo;
+    makeTable(filteredData)
+}
+
+function makeTable(jsonData){
     const tableHead = document.getElementById('table-head');
     const tableBody = document.getElementById('table-body');
 
@@ -6,7 +15,7 @@ export function makeTable(jsonData){
     let headerRow = '<tr class="px-3 py-3 text-center text-sm font-semibold text-gray-700 uppercase">';
     headers.map(header => headerRow += `<th>${header.replace('_', ' ')}</th>`)
     headerRow += '</tr>'
-    tableHead.innerHTML += headerRow;
+    tableHead.innerHTML = headerRow;
 
     let dataRows = ''
     jsonData.map((dataObj) => {
@@ -15,5 +24,5 @@ export function makeTable(jsonData){
         dataRow += '</tr>'
         dataRows += dataRow;
     })
-    tableBody.innerHTML += dataRows;
+    tableBody.innerHTML = dataRows;
 }

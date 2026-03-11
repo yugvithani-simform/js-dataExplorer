@@ -2,8 +2,10 @@ const state = {
     jsonData: [],
     typeOfData: {},
     filteredData: [],
-    currentPage: 1,
-    totalPage: 1
+    pageNo: 1,
+    totalPage: 1,
+    startIndex: 0,
+    pageOffset: 10
 }
 
 export default state;

@@ -12,14 +12,22 @@
         <input type="file" id="uploadFile" accept=".csv"/>
         <div id="loader" class='hidden'>Loading...</div>
 
-        <div class="flex items-center gap-2">
+        <div id="paginationSection" class="items-center gap-2 hidden">
+
+            <select id="pageOffset" class="border rounded px-2 py-1 text-sm focus:outline-none focus:ring">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+
             <button id="prevPage" class="ml-2 px-3 py-1 border rounded hover:bg-gray-300">
                 &lt;
             </button>
 
             <div class="flex items-center gap-1">
-                <input type="number" id="pageNum" value="1" min="1" class="w-16 px-2 py-1 border rounded text-center focus:outline-none focus:ring-2 "/>
-                <span class="text-gray-500">/ 10</span>
+                <input type="number" id="pageNo" value="1" min="1" class="w-16 px-2 py-1 border rounded text-center focus:outline-none focus:ring-2 "/>
+                <span id="totalPage" class="text-gray-500">/ 1</span>
             </div>
 
             <button id="nextPage" class="px-3 py-1 border rounded hover:bg-gray-300">

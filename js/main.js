@@ -1,3 +1,6 @@
+import CsvDataExplorer from "./csvDataExplorer.js";
+
+const csvDataExplorer = new CsvDataExplorer()
 document.getElementById('uploadFile').addEventListener("change", handleFileSelection)
 
 async function handleFileSelection(e) {
@@ -12,34 +15,15 @@ async function handleFileSelection(e) {
     
     reader.onload = function(e){
         const fileText = e.target.result;
-        const jsonData = csvToJson(fileText)
-        makeTable(jsonData)
+        csvDataExplorer.csvToJson(fileText)
+        makeTable(csvDataExplorer.jsonData)
     }
 
     reader.onloadend = function () {
-        loader.className = "hidden"; 
+        loader.className = "hidden";
     };
 
     reader.readAsText(file);
-    
-}
-
-function csvToJson(fileText){
-    const rows = fileText.split('\n');
-    const headers = rows[0].split(',');
-    const dataRows = rows.slice(1);
-    let jsonData = []
-
-    for(let dataRow of dataRows){
-        let data = dataRow.split(',');
-        let jsonObj = {}
-        for(let j=0; j<headers.length; j++){
-            jsonObj[headers[j]] = data[j];
-        }
-        jsonData.push(jsonObj)
-    }
-
-    return jsonData;
 }
 
 function makeTable(jsonData){

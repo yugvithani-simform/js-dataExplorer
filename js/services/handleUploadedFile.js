@@ -1,6 +1,7 @@
 import { csvToJson } from "./csvToJson.js";
 import state from '../state.js'
 import { pagination } from "../features/pagination.js";
+import { calculateColumnWidths } from "../render.js";
 
 export function handleUploadedFile(e) {
     const loader = document.getElementById('loader')
@@ -16,6 +17,7 @@ export function handleUploadedFile(e) {
     reader.onload = function(e){
         const fileText = e.target.result;
         state.jsonData = csvToJson(fileText)
+        calculateColumnWidths(state.jsonData);
         pagination();
     }
 

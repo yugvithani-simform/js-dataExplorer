@@ -1,5 +1,21 @@
 import state from "./state.js";
 
+export function calculateColumnWidths(jsonData) {
+    const headers = Object.keys(jsonData[0]);
+    
+    headers.forEach(header => {
+        let maxLength = header.length;
+        
+        jsonData.forEach(row => {
+            const cellValue = String(row[header] || '').length;
+            maxLength = Math.max(maxLength, cellValue);
+        });
+        
+        // Add padding for better reading
+        state.columnWidths[header] = maxLength + 6;
+    });
+}
+
 export function render(filteredData){
     document.getElementById('pageNo').innerHTML = state.currentPage;
     document.getElementById('totalPage').innerHTML = `/ ${state.totalPage}`;
@@ -13,14 +29,20 @@ function makeTable(jsonData){
 
     const headers = Object.keys(jsonData[0])
     let headerRow = '<tr class="px-3 py-3 text-center text-sm font-semibold text-gray-700 uppercase">';
-    headers.map(header => headerRow += `<th>${header.replace('_', ' ')}</th>`)
+    headers.map(header => {
+        const width = state.columnWidths[header] || 20;
+        headerRow += `<th style="min-width: ${width}ch; word-break: break-word;">${header.replace('_', ' ')}</th>`
+    })
     headerRow += '</tr>'
     tableHead.innerHTML = headerRow;
 
     let dataRows = ''
     jsonData.map((dataObj) => {
         let dataRow = '<tr class="hover:bg-gray-50">';
-        headers.forEach(h => dataRow += `<td class="px-3 py-3 text-sm text-gray-600">${dataObj[h]}</td>`);
+        headers.forEach(h => {
+            const width = state.columnWidths[h] || 20;
+            dataRow += `<td class="px-3 py-3 text-sm text-gray-600" style="min-width: ${width}ch; word-break: break-word;">${dataObj[h]}</td>`;
+        });
         dataRow += '</tr>'
         dataRows += dataRow;
     })

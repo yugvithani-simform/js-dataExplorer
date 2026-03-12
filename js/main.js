@@ -3,8 +3,27 @@ import { showNextPage, showPrevPage, showPageAtPageNo, changeOffset, pagination 
 import { resetState } from "./features/resetState.js";
 import { sorting } from "./features/sorting.js";
 import { handleUploadedFile } from "./services/handleUploadedFile.js";
+import state from "./state.js";
 
-document.getElementById('uploadFile').addEventListener("change", handleUploadedFile)
+//when upload the file
+document.getElementById('uploadFile').addEventListener("change", (e) => {
+    document.getElementById('fileName').innerText = e.target.files[0].name
+    handleUploadedFile(e)
+})
+
+// to download the file
+document.getElementById('downloadCSV').addEventListener("click", () => {
+    let csvContent = "data:text/csv;charset=utf-8,";
+    csvContent += Object.keys(state.filteredData[0]).join(",") + "\n";
+    csvContent += state.filteredData.map(row => Object.values(row).join(",")).join("\n");
+    let encodedUri = encodeURI(csvContent);
+    let link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+})
 
 // previous and next page button
 document.getElementById('prevPage').addEventListener("click", showPrevPage)

@@ -2,10 +2,12 @@ import { csvToJson } from "./csvToJson.js";
 import state from '../state.js'
 import { pagination } from "../features/pagination.js";
 import { calculateColumnWidths } from "../render.js";
+import { resetState } from "../features/resetState.js";
 
 export function handleUploadedFile(e) {
     const loader = document.getElementById('loader')
     const features = document.getElementById('features')
+    const downloadCSV = document.getElementById('downloadCSV')
     const file = e.target.files[0];
 
     const reader = new FileReader()
@@ -20,13 +22,18 @@ export function handleUploadedFile(e) {
         state.filteredData = state.jsonData
         calculateColumnWidths(state.filteredData);
         addFilterColumn(Object.keys(state.filteredData[0]))
+        resetState();
         pagination();
     }
 
     reader.onloadend = function () {
         loader.className = "hidden";
+
         features.classList.remove('hidden')
-        features.classList.add('block');
+        features.classList.add('flex');
+
+        downloadCSV.classList.remove('hidden')
+        downloadCSV.classList.add('block')
     };
 
     reader.readAsText(file);

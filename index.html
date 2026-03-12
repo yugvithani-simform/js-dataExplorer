@@ -8,25 +8,29 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         crossorigin="anonymous"
     >
+    <script type="module" src="./js/main.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>JS Data Explorer</title>
 </head>
 <body>
     <div>
-        <input type="file" id="uploadFile" accept=".csv"/>
         <div id="loader" class='hidden'>Loading...</div>
 
-        <div id="features" class="hidden">
-            <div id="filterSection" class="flex mr-4 justify-end items-center gap-2 mb-1">
-                <select id="filterColumn" class="border rounded px-3 py-1.75 text-sm focus:outline-none focus:ring">
-                </select>
-                <input id="filterQuery" type="text" placeholder="Enter text to Filter" class="w-60 px-2 py-1 border rounded focus:outline-none focus:ring-2"/>
-                <button id="resetButton" class="px-5 py-1 border rounded bg-blue-700 text-white">
-                    Reset
-                </button>
-            </div>
+        <div id="csvActions" class="flex justify-end items-center mr-4 mb-6 mt-4 gap-2">
+            <div id="fileName" class="text-gray-500 italic mr-4 left-4 top-0"></div>
 
-            <div id="paginationSection" class="flex justify-center items-center gap-2">
+            <button id="downloadCSV" class="hidden px-5 py-1 border rounded bg-green-700 text-white">
+                Export
+            </button>
+
+            <label id="importCSV" class="ml-2 px-5 py-1 border rounded bg-blue-700 text-white">
+                Import
+                <input type="file" id="uploadFile" class="hidden" accept=".csv"/>
+            </label>
+        </div>
+
+        <div id="features" class="hidden justify-between flex-wrap items-center">
+            <div id="paginationSection" class="flex justify-center items-center gap-2 ml-4 mr-4">
                 <select id="pageOffset" class="border rounded px-3 py-1.75 text-sm focus:outline-none focus:ring">
                     <option value="10">10</option>
                     <option value="20">20</option>
@@ -39,7 +43,8 @@
                 </button>
     
                 <div class="flex items-center gap-1">
-                    <input type="number" id="pageNo" value="1" min="1" class="w-16 px-2 py-1 border rounded text-center focus:outline-none focus:ring-2 "/>
+                    <input type="number" id="pageNo" value="1" min="1" 
+                        class="w-16 px-2 py-1 border rounded text-center focus:outline-none focus:ring-2 "/>
                     <span id="totalPage" class="text-gray-500">/ 1</span>
                 </div>
     
@@ -48,14 +53,23 @@
                 </button>
             </div>
 
+            <div id="filterSection" class="right-4 top-0 flex items-center gap-2 mr-4 ml-4">
+                <select id="filterColumn" class="border rounded px-3 py-1.75 text-sm focus:outline-none focus:ring"></select>
+                <input id="filterQuery" type="text"
+                    placeholder="Enter text to Filter"
+                    class="w-60 px-2 py-1 border rounded focus:outline-none focus:ring-2"/>
+
+                <button id="resetButton" class="px-5 py-1 border rounded bg-blue-700 text-white">
+                    Reset
+                </button>
+            </div>
         </div>
-        <div id="tableContent" class="overflow-x-auto p-6">
+        <div id="tableContent" class="overflow-x-auto p-4">
             <table id="table" class="min-w-full table-fixed border border-gray-300">
                 <thead id="table-head" class="bg-gray-100"></thead>
                 <tbody id="table-body" class="divide-y"></tbody>
             </table>
         </div>
     </div>
-    <script type="module" src="./js/main.js"></script>
 </body>
 </html>

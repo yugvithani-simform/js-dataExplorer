@@ -2,16 +2,8 @@ import state from "../state.js";
 import { sorting } from "./sorting.js";
 
 export function filtering(query, columnName = state.filterColumn){
-    if(query === ''){
-        state.isFiltered = false;
-        state.filteredData = state.jsonData
-        if(state.sortColumn)
-            sorting()
-        return;
-    }
-    if(!state.isSorted){
-        state.filteredData = state.jsonData
-    }
+    state.filteredData = state.jsonData
+
     query = query.toLowerCase()
     state.filteredData = state.filteredData.filter((ele)=> {
         let flag = false;
@@ -29,9 +21,8 @@ export function filtering(query, columnName = state.filterColumn){
         return flag;
     })
     state.pageNo = 1
-    if(state.filteredData)
-        state.isFiltered = true;
-    if(state.isSorted){
+    if(state.sortColumn){
+        state.sortOrder = (state.sortOrder === 'asc') ? 'desc' : 'asc';
         sorting()
     }
 }

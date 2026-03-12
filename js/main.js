@@ -37,8 +37,7 @@ queryToFilter.addEventListener("input", () => {
 })
 
 filterColumn.addEventListener("change", () => {
-    filtering(queryToFilter.value, filterColumn.value)
-    if(queryToFilter.value !== ''){
+    if(queryToFilter.value !== '')
+        filtering(queryToFilter.value, filterColumn.value)
         pagination()
-    }
 })

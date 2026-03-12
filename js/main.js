@@ -1,5 +1,6 @@
 import { filtering } from "./features/filtering.js";
 import { showNextPage, showPrevPage, showPageAtPageNo, changeOffset, pagination } from "./features/pagination.js";
+import { resetState } from "./features/resetState.js";
 import { sorting } from "./features/sorting.js";
 import { handleUploadedFile } from "./services/handleUploadedFile.js";
 
@@ -40,4 +41,11 @@ filterColumn.addEventListener("change", () => {
     if(queryToFilter.value !== '')
         filtering(queryToFilter.value, filterColumn.value)
         pagination()
+})
+
+// reset button
+document.getElementById('resetButton').addEventListener("click", () => {
+    queryToFilter.value = ''
+    filterColumn.value = 'all'
+    resetState()
 })

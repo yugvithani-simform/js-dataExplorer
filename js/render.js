@@ -19,6 +19,7 @@ export function calculateColumnWidths(jsonData) {
 export function render(filteredData){
     document.getElementById('totalPage').innerHTML = `/ ${state.totalPage}`;
     document.getElementById('pageNo').value = state.pageNo;
+    document.getElementById('pageOffset').value = state.pageOffset;
     makeTable(filteredData)
 }
 

@@ -5,7 +5,7 @@ import { calculateColumnWidths } from "../render.js";
 
 export function handleUploadedFile(e) {
     const loader = document.getElementById('loader')
-    const paginationSection = document.getElementById('paginationSection')
+    const features = document.getElementById('features')
     const file = e.target.files[0];
 
     const reader = new FileReader()
@@ -18,16 +18,26 @@ export function handleUploadedFile(e) {
         const fileText = e.target.result;
         state.jsonData = csvToJson(fileText)
         state.filteredData = state.jsonData
-        state.sortedData = state.jsonData
         calculateColumnWidths(state.filteredData);
+        addFilterColumn(Object.keys(state.filteredData[0]))
         pagination();
     }
 
     reader.onloadend = function () {
         loader.className = "hidden";
-        paginationSection.classList.remove('hidden')
-        paginationSection.classList.add('flex');
+        features.classList.remove('hidden')
+        features.classList.add('block');
     };
 
     reader.readAsText(file);
+}
+
+function addFilterColumn(headers){
+    let filterColumn = document.getElementById('filterColumn')
+    filterColumn.innerHTML = `<option value="all">All Columns</option>`
+    for(let header of headers){
+        let formatedHeader = header.replaceAll('_', ' ');
+        formatedHeader = formatedHeader.charAt(0).toUpperCase() + formatedHeader.slice(1);
+        filterColumn.innerHTML += `<option value="${header}"> ${formatedHeader} </option>`
+    }
 }

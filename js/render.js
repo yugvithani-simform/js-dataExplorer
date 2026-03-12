@@ -26,13 +26,13 @@ function makeTable(jsonData){
     const tableHead = document.getElementById('table-head');
     const tableBody = document.getElementById('table-body');
 
-    const headers = Object.keys(jsonData[0])
+    const headers = Object.keys(state.typeOfData)
     let headerRow = '<tr class="px-3 py-3 text-center text-sm font-semibold text-gray-700 uppercase">';
     headers.map(header => {
         const width = state.columnWidths[header] || 20;
         headerRow += 
             `<th id='${header}' class="group cursor-pointer px-3 py-2 text-left" style="min-width: ${width}ch; word-break: break-word;">
-                ${header.replace('_', ' ')}
+                ${header.replaceAll('_', ' ')}
                 <i class="fa-solid ${(state.sortColumn === header && state.sortOrder === 'desc') ? 'fa-caret-up' : 'fa-caret-down'} ml-1 ${state.sortColumn === header ? 'opacity-100' : 'opacity-0'} group-hover:opacity-80 transition"></i>
             </th>`
     })

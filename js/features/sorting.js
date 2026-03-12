@@ -1,6 +1,9 @@
 import state from "../state.js";
 
 export function sorting(columnName = state.sortColumn){
+    if(!state.isFiltered){
+        state.filteredData = state.jsonData
+    }
     const typeOfColumn = state.typeOfData[columnName]
     if(state.sortColumn === columnName){
         state.sortOrder = (state.sortOrder === 'asc') ? 'desc' : 'asc';
@@ -9,8 +12,7 @@ export function sorting(columnName = state.sortColumn){
         state.sortOrder = 'asc'
         state.sortColumn = columnName
     }
-    state.sortedData = structuredClone(state.jsonData)
-    state.sortedData.sort( (x,y) => {
+    state.filteredData.sort( (x,y) => {
         if(state.sortOrder === 'desc')
             [x, y] = [y, x]
 
@@ -21,4 +23,5 @@ export function sorting(columnName = state.sortColumn){
         return x[columnName].localeCompare(y[columnName])
     })
     state.pageNo = 1;
+    state.isSorted = true;
 }

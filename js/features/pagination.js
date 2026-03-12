@@ -5,11 +5,10 @@ function pagination () {
     state.startIndex = (state.pageNo-1) * state.pageOffset;
     let end = state.startIndex + state.pageOffset;
 
-    state.totalPage = Math.ceil(state.jsonData.length / state.pageOffset)
+    state.totalPage = Math.ceil(state.filteredData.length / state.pageOffset)
     if(end > state.totalPage * state.pageOffset)
         end = state.totalPage;
-    state.filteredData = state.sortedData.slice(state.startIndex, end)
-    render(state.filteredData)
+    render(state.filteredData.slice(state.startIndex, end))
 }
 
 function showPrevPage(){

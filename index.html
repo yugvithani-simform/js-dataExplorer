@@ -16,29 +16,39 @@
         <input type="file" id="uploadFile" accept=".csv"/>
         <div id="loader" class='hidden'>Loading...</div>
 
-        <div id="paginationSection" class="items-center gap-2 hidden">
-
-            <select id="pageOffset" class="border rounded px-2 py-1 text-sm focus:outline-none focus:ring">
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-
-            <button id="prevPage" class="ml-2 px-3 py-1 border rounded hover:bg-gray-300">
-                &lt;
-            </button>
-
-            <div class="flex items-center gap-1">
-                <input type="number" id="pageNo" value="1" min="1" class="w-16 px-2 py-1 border rounded text-center focus:outline-none focus:ring-2 "/>
-                <span id="totalPage" class="text-gray-500">/ 1</span>
+        <div id="features" class="hidden">
+            <div id="filterSection" class="flex mr-4 justify-end items-center gap-2 mb-1">
+                <select id="filterColumn" class="border rounded px-3 py-1.75 text-sm focus:outline-none focus:ring">
+                </select>
+                <input id="filterQuery" type="text" placeholder="Enter text to Filter" class="w-60 px-2 py-1 border rounded focus:outline-none focus:ring-2"/>
+                <button id="filterButton" class="px-5 py-1 border rounded bg-blue-700 text-white">
+                    Filter
+                </button>
             </div>
 
-            <button id="nextPage" class="px-3 py-1 border rounded hover:bg-gray-300">
-                &gt;
-            </button>
-        </div>
+            <div id="paginationSection" class="flex justify-center items-center gap-2">
+                <select id="pageOffset" class="border rounded px-3 py-1.75 text-sm focus:outline-none focus:ring">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+    
+                <button id="prevPage" class="ml-2 px-3 py-1 border rounded hover:bg-gray-300">
+                    &lt;
+                </button>
+    
+                <div class="flex items-center gap-1">
+                    <input type="number" id="pageNo" value="1" min="1" class="w-16 px-2 py-1 border rounded text-center focus:outline-none focus:ring-2 "/>
+                    <span id="totalPage" class="text-gray-500">/ 1</span>
+                </div>
+    
+                <button id="nextPage" class="px-3 py-1 border rounded hover:bg-gray-300">
+                    &gt;
+                </button>
+            </div>
 
+        </div>
         <div id="tableContent" class="overflow-x-auto p-6">
             <table id="table" class="min-w-full table-fixed border border-gray-300">
                 <thead id="table-head" class="bg-gray-100"></thead>

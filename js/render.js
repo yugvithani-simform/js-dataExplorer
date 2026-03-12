@@ -12,7 +12,7 @@ export function calculateColumnWidths(jsonData) {
         });
         
         // Add padding for better reading
-        state.columnWidths[header] = maxLength + 6;
+        state.columnWidths[header] = maxLength + 7;
     });
 }
 
@@ -30,7 +30,11 @@ function makeTable(jsonData){
     let headerRow = '<tr class="px-3 py-3 text-center text-sm font-semibold text-gray-700 uppercase">';
     headers.map(header => {
         const width = state.columnWidths[header] || 20;
-        headerRow += `<th style="min-width: ${width}ch; word-break: break-word;">${header.replace('_', ' ')}</th>`
+        headerRow += 
+            `<th id='${header}' class="group cursor-pointer px-3 py-2 text-left" style="min-width: ${width}ch; word-break: break-word;">
+                ${header.replace('_', ' ')}
+                <i class="fa-solid ${(state.sortColumn === header && state.sortOrder === 'desc') ? 'fa-caret-up' : 'fa-caret-down'} ml-1 ${state.sortColumn === header ? 'opacity-100' : 'opacity-0'} group-hover:opacity-80 transition"></i>
+            </th>`
     })
     headerRow += '</tr>'
     tableHead.innerHTML = headerRow;

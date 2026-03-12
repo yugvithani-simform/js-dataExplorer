@@ -25,8 +25,6 @@ function setTypeOfData(row){
             type = 'string'
         else if(!isNaN(val))
             type = 'number'
-        else if(val === 'true' || val === 'false')
-            type = 'boolean'
         else if(!isNaN(Date.parse(val)))
             type = 'object'
         else

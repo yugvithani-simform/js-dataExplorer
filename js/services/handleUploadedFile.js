@@ -17,7 +17,9 @@ export function handleUploadedFile(e) {
     reader.onload = function(e){
         const fileText = e.target.result;
         state.jsonData = csvToJson(fileText)
-        calculateColumnWidths(state.jsonData);
+        state.filteredData = state.jsonData
+        state.sortedData = state.jsonData
+        calculateColumnWidths(state.filteredData);
         pagination();
     }
 

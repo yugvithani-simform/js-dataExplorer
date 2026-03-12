@@ -1,4 +1,5 @@
-import { showNextPage, showPrevPage, showPageAtPageNo, changeOffset } from "./features/pagination.js";
+import { showNextPage, showPrevPage, showPageAtPageNo, changeOffset, pagination } from "./features/pagination.js";
+import { sorting } from "./features/sorting.js";
 import { handleUploadedFile } from "./services/handleUploadedFile.js";
 
 document.getElementById('uploadFile').addEventListener("change", handleUploadedFile)
@@ -16,3 +17,10 @@ pageNo.addEventListener("change", (e) => {
 
 // change Offset Value
 document.getElementById('pageOffset').addEventListener("change", changeOffset)
+
+document.getElementById('table-head').addEventListener("click", (e) => {
+    if(e.target.tagName === 'I' || e.target.tagName === 'TH'){
+        sorting(e.target.closest('th').id)
+        pagination()
+    }
+})

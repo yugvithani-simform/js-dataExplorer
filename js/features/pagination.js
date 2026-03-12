@@ -8,8 +8,7 @@ function pagination () {
     state.totalPage = Math.ceil(state.jsonData.length / state.pageOffset)
     if(end > state.totalPage * state.pageOffset)
         end = state.totalPage;
-    
-    state.filteredData = state.jsonData.slice(state.startIndex, end)
+    state.filteredData = state.sortedData.slice(state.startIndex, end)
     render(state.filteredData)
 }
 

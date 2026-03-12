@@ -2,6 +2,7 @@ const state = {
     jsonData: [],
     typeOfData: {},
     filteredData: [],
+    sortedData: [],
     pageNo: 1,
     totalPage: 1,
     startIndex: 0,

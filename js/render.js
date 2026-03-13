@@ -28,7 +28,7 @@ function makeTable(jsonData){
     const tableBody = document.getElementById('table-body');
 
     const headers = Object.keys(state.typeOfData)
-    let headerRow = '<tr class="px-3 py-3 text-center text-sm font-semibold text-gray-700 uppercase">';
+    let headerRow = '<tr id="headers" class="px-3 py-3 text-center text-sm font-semibold text-gray-700 uppercase">';
     headers.map(header => {
         const width = state.columnWidths[header] || 20;
         headerRow += 
@@ -42,7 +42,7 @@ function makeTable(jsonData){
 
     let dataRows = ''
     jsonData.map((dataObj) => {
-        let dataRow = '<tr class="hover:bg-gray-50">';
+        let dataRow = `<tr id="${(state.pageNo-1)*state.pageOffset + jsonData.indexOf(dataObj)}" class="data hover:bg-gray-50">`;
         headers.forEach(h => {
             const width = state.columnWidths[h] || 20;
             dataRow += `<td class="px-3 py-3 text-sm text-gray-600" style="min-width: ${width}ch; word-break: break-word;">${dataObj[h]}</td>`;

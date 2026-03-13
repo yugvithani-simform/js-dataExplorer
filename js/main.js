@@ -1,3 +1,4 @@
+import { fetchRecord } from "./features/fetchRecord.js";
 import { filtering } from "./features/filtering.js";
 import { showNextPage, showPrevPage, showPageAtPageNo, changeOffset, pagination } from "./features/pagination.js";
 import { resetState } from "./features/resetState.js";
@@ -60,6 +61,36 @@ filterColumn.addEventListener("change", () => {
     if(queryToFilter.value !== '')
         filtering(queryToFilter.value, filterColumn.value)
         pagination()
+})
+
+// view record by pop up
+document.getElementById('table-body').addEventListener("click" ,(e) => {
+    if(!e.target.closest('tr').id || e.target.closest('tr').id === 'headers')
+        return;
+    let id = e.target.closest('tr').id;
+    let record = fetchRecord(id);
+
+    let popup = document.getElementById('recordPopup')
+    popup.innerHTML = ''
+    let div = document.createElement('div')
+    popup.classList.replace('hidden', 'flex')
+    div.id='popupBox'
+    div.classList.add('bg-white', 'w-100', 'rounded-lg', 'shadow-xl', 'p-6')
+    div.innerHTML = ''
+    for(let [key, val] of Object.entries(record)){
+        let formatedKey = key.replaceAll('_', ' ');
+        formatedKey = formatedKey.charAt(0).toUpperCase() + formatedKey.slice(1);
+        div.innerHTML += `<div><strong>${formatedKey}</strong>: ${val} </div>`
+    }
+
+    popup.appendChild(div)
+})
+
+document.getElementById('recordPopup').addEventListener("click", (e)=> {
+    let popup = document.getElementById('popupBox')
+    if(!popup.contains(e.target)){
+        e.target.classList.replace('flex', 'hidden')
+    }
 })
 
 // reset button

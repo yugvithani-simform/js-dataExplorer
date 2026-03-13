@@ -58,9 +58,10 @@ queryToFilter.addEventListener("input", () => {
 })
 
 filterColumn.addEventListener("change", () => {
-    if(queryToFilter.value !== '')
+    if(queryToFilter.value !== ''){
         filtering(queryToFilter.value, filterColumn.value)
         pagination()
+    }
 })
 
 // view record by pop up

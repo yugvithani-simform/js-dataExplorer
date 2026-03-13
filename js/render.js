@@ -45,7 +45,16 @@ function makeTable(jsonData){
         let dataRow = `<tr id="${(state.pageNo-1)*state.pageOffset + jsonData.indexOf(dataObj)}" class="data hover:bg-gray-50">`;
         headers.forEach(h => {
             const width = state.columnWidths[h] || 20;
-            dataRow += `<td class="px-3 py-3 text-sm text-gray-600" style="min-width: ${width}ch; word-break: break-word;">${dataObj[h]}</td>`;
+            let highlightedText = dataObj[h]
+
+            // highlight the filter query text
+            if(state.filterQuery){
+                // RegExp : g->global → find all matches, i-> ignore case so use for match the case-insensetive
+                // $& -> the exact matched substring
+                highlightedText = highlightedText.replaceAll(new RegExp(state.filterQuery, "gi"), `<span class="bg-yellow-300">$&</span>`)
+            }
+
+            dataRow += `<td class="px-3 py-3 text-sm text-gray-600" style="min-width: ${width}ch; word-break: break-word;">${highlightedText}</td>`;
         });
         dataRow += '</tr>'
         dataRows += dataRow;

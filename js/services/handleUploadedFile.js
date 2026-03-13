@@ -19,7 +19,7 @@ export function handleUploadedFile(e) {
     reader.onload = function(e){
         const fileText = e.target.result;
         state.jsonData = csvToJson(fileText)
-        state.filteredData = state.jsonData
+        state.filteredData = structuredClone(state.jsonData)
         calculateColumnWidths(state.filteredData);
         addFilterColumn(Object.keys(state.filteredData[0]))
         resetState();

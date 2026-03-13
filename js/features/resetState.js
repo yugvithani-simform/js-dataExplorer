@@ -2,7 +2,7 @@ import state from "../state.js";
 import { pagination } from "./pagination.js";
 
 export function resetState(){
-    state.filteredData = state.jsonData;
+    state.filteredData = structuredClone(state.jsonData);
     state.pageNo = 1;
     state.pageOffset = 10;
     state.startIndex = 0;

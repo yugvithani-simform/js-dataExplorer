@@ -4,7 +4,7 @@ import { sorting } from "./sorting.js";
 export function filtering(query, columnName = state.filterColumn){
     state.filterQuery = query
     state.filterColumn = columnName
-    state.filteredData = state.jsonData
+    state.filteredData = structuredClone(state.jsonData)
 
     query = query.toLowerCase()
     state.filteredData = state.filteredData.filter((ele)=> {

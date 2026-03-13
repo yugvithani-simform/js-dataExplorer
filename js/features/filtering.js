@@ -3,7 +3,7 @@ import { sorting } from "./sorting.js";
 
 export function filtering(query, columnName = state.filterColumn){
     state.filterQuery = query
-    state.filterColumn = state.filterColumn
+    state.filterColumn = columnName
     state.filteredData = state.jsonData
 
     query = query.toLowerCase()

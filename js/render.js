@@ -48,7 +48,7 @@ function makeTable(jsonData){
             let highlightedText = dataObj[h]
 
             // highlight the filter query text
-            if(state.filterQuery){
+            if(state.filterQuery && (state.filterColumn === h || state.filterColumn === 'all')){
                 // RegExp : g->global → find all matches, i-> ignore case so use for match the case-insensetive
                 // $& -> the exact matched substring
                 highlightedText = highlightedText.replaceAll(new RegExp(state.filterQuery, "gi"), `<span class="bg-yellow-300">$&</span>`)

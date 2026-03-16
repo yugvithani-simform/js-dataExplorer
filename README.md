@@ -12,6 +12,7 @@ It allows users to import CSV files, explore data in a table, sort columns, sear
 - **Column sorting** (ascending / descending)
 - **Search & highlight matching text**
 - **Pagination** for large datasets
+- **Debouncing** in filter search query 
 
 
 ## Tech Stack

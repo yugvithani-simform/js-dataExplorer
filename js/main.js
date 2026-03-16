@@ -4,6 +4,7 @@ import { showNextPage, showPrevPage, showPageAtPageNo, changeOffset, pagination 
 import { resetState } from "./features/resetState.js";
 import { sorting } from "./features/sorting.js";
 import { handleUploadedFile } from "./services/handleUploadedFile.js";
+import { debounce } from "./services/debounce.js";
 import state from "./state.js";
 
 //when upload the file
@@ -52,10 +53,13 @@ document.getElementById('table-head').addEventListener("click", (e) => {
 let queryToFilter = document.getElementById('filterQuery')
 let filterColumn = document.getElementById('filterColumn')
 
-queryToFilter.addEventListener("input", () => {
-    filtering(queryToFilter.value, filterColumn.value)
-    pagination()
-})
+queryToFilter.addEventListener("input", debounce(
+    () => {
+        filtering(queryToFilter.value, filterColumn.value)
+        pagination()
+    }
+    ,400)
+)
 
 filterColumn.addEventListener("change", () => {
     if(queryToFilter.value !== ''){

@@ -26,38 +26,46 @@ export function render(filteredData){
 function makeTable(jsonData){
     const tableHead = document.getElementById('table-head');
     const tableBody = document.getElementById('table-body');
+    const table = document.getElementById('table');
 
-    const headers = Object.keys(state.typeOfData)
-    let headerRow = '<tr id="headers" class="px-3 py-3 text-center text-sm font-semibold text-gray-700 uppercase">';
-    headers.map(header => {
-        const width = state.columnWidths[header] || 20;
-        headerRow += 
-            `<th id='${header}' class="group cursor-pointer px-3 py-2 text-left" style="min-width: ${width}ch; word-break: break-word;">
-                ${header.replaceAll('_', ' ')}
-                <i class="fa-solid ${(state.sortColumn === header && state.sortOrder === 'desc') ? 'fa-caret-up' : 'fa-caret-down'} ml-1 ${state.sortColumn === header ? 'opacity-100' : 'opacity-0'} group-hover:opacity-80 transition"></i>
-            </th>`
-    })
-    headerRow += '</tr>'
-    tableHead.innerHTML = headerRow;
-
-    let dataRows = ''
-    jsonData.map((dataObj) => {
-        let dataRow = `<tr id="${(state.pageNo-1)*state.pageOffset + jsonData.indexOf(dataObj)}" class="data hover:bg-gray-50">`;
-        headers.forEach(h => {
-            const width = state.columnWidths[h] || 20;
-            let highlightedText = dataObj[h]
-
-            // highlight the filter query text
-            if(state.filterQuery && (state.filterColumn === h || state.filterColumn === 'all')){
-                // RegExp : g->global → find all matches, i-> ignore case so use for match the case-insensetive
-                // $& -> the exact matched substring
-                highlightedText = highlightedText.replaceAll(new RegExp(state.filterQuery, "gi"), `<span class="bg-yellow-300">$&</span>`)
-            }
-
-            dataRow += `<td class="px-3 py-3 text-sm text-gray-600" style="min-width: ${width}ch; word-break: break-word;">${highlightedText}</td>`;
-        });
-        dataRow += '</tr>'
-        dataRows += dataRow;
-    })
-    tableBody.innerHTML = dataRows;
+    if(state.filteredData.length){
+        const headers = Object.keys(state.typeOfData)
+        let headerRow = '<tr id="headers" class="px-3 py-3 text-center text-sm font-semibold text-gray-700 uppercase">';
+        headers.map(header => {
+            const width = state.columnWidths[header] || 20;
+            headerRow += 
+                `<th id='${header}' class="group cursor-pointer px-3 py-2 text-left" style="min-width: ${width}ch; word-break: break-word;">
+                    ${header.replaceAll('_', ' ')}
+                    <i class="fa-solid ${(state.sortColumn === header && state.sortOrder === 'desc') ? 'fa-caret-up' : 'fa-caret-down'} ml-1 ${state.sortColumn === header ? 'opacity-100' : 'opacity-0'} group-hover:opacity-80 transition"></i>
+                </th>`
+        })
+        headerRow += '</tr>'
+        tableHead.innerHTML = headerRow;
+    
+        let dataRows = ''
+        jsonData.map((dataObj) => {
+            let dataRow = `<tr id="${(state.pageNo-1)*state.pageOffset + jsonData.indexOf(dataObj)}" class="data hover:bg-gray-50">`;
+            headers.forEach(h => {
+                const width = state.columnWidths[h] || 20;
+                let highlightedText = dataObj[h]
+    
+                // highlight the filter query text
+                if(state.filterQuery && (state.filterColumn === h || state.filterColumn === 'all')){
+                    // RegExp : g->global → find all matches, i-> ignore case so use for match the case-insensetive
+                    // $& -> the exact matched substring
+                    highlightedText = highlightedText.replaceAll(new RegExp(state.filterQuery, "gi"), `<span class="bg-yellow-300">$&</span>`)
+                }
+    
+                dataRow += `<td class="px-3 py-3 text-sm text-gray-600" style="min-width: ${width}ch; word-break: break-word;">${highlightedText}</td>`;
+            });
+            dataRow += '</tr>'
+            dataRows += dataRow;
+        })
+        tableBody.innerHTML = dataRows;
+    }
+    else{
+        tableHead.innerHTML = ``
+        tableBody.innerHTML = `<div class="flex justify-center items-center text-gray-500 italic"> No data available </div>`
+        table.classList.remove('border')
+    }
 }

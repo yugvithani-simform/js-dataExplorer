@@ -20,6 +20,8 @@ export function render(filteredData){
     document.getElementById('totalPage').innerHTML = `/ ${state.totalPage}`;
     document.getElementById('pageNo').value = state.pageNo;
     document.getElementById('pageOffset').value = state.pageOffset;
+    document.getElementById('filterQuery').value = state.filterQuery;
+    document.getElementById('filterColumn').value = state.filterColumn;
     makeTable(filteredData)
 }
 
